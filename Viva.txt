@@ -1,0 +1,197 @@
+Of course! Here is a comprehensive list of viva questions and answers for the subject "Advanced DevOps Lab (ADL)," organized experiment-wise, based on the content of your provided PDF.
+
+---
+
+Experiment 1: AWS Cloud9 IDE & Collaboration
+
+Q1. What is AWS Cloud9?
+A1.AWS Cloud9 is a cloud-based Integrated Development Environment (IDE) that lets you write, run, and debug code directly from your web browser. It comes with a code editor, debugger, and terminal, and it's pre-configured with essential tools like the AWS CLI.
+
+Q2. What are the key benefits of using AWS Cloud9?
+A2.Key benefits include:
+
+· No Setup Required: It's a ready-to-use environment.
+· Accessibility: Access your development environment from anywhere.
+· Collaboration: Multiple developers can work on the same environment in real-time.
+· AWS Integration: Seamlessly integrates with other AWS services.
+· Cost-Effective: You only pay for the underlying EC2 instance and storage.
+
+Q3. How did you demonstrate collaboration in Cloud9?
+A3.We used the "Share" feature in the Cloud9 environment. We invited an IAM user (e.g., apsit) by their username and granted them Read-Write (RW) permissions. This allowed the invited user to open the same IDE in their browser and edit the same files simultaneously, enabling real-time collaboration.
+
+Q4. What is the role of IAM in this experiment?
+A4.IAM (Identity and Access Management) is used to create and manage users and their permissions. We created a new IAM user and added them to a group with the AWSCloud9EnvironmentMember policy, which grants the necessary permissions to access and collaborate on shared Cloud9 environments.
+
+---
+
+Experiment 2 & 3: AWS CodeBuild, CodePipeline, and S3/EC2 Deployment
+
+Q1. What is the purpose of AWS CodeBuild?
+A1.AWS CodeBuild is a fully managed continuous integration service that compiles source code, runs tests, and produces software packages that are ready to deploy. It eliminates the need to manage your own build servers.
+
+Q2. What is AWS CodePipeline?
+A2.AWS CodePipeline is a continuous delivery service that automates the release process for fast and reliable application and infrastructure updates. It models the different stages of your release process (e.g., Source, Build, Deploy) into a pipeline.
+
+Q3. How can you deploy a static website using these services?
+A3.The pipeline can be configured as follows:
+
+1. Source Stage: CodePipeline pulls the source code (e.g., HTML, CSS, JS) from a repository like GitHub.
+2. Build Stage (Optional): CodeBuild can be used to run build commands (like installing dependencies).
+3. Deploy Stage: The built artifacts are deployed to an Amazon S3 bucket that has static website hosting enabled.
+
+Q4. What permissions are required for CodeBuild and CodePipeline to function?
+A4.They need IAM roles with specific permissions. For example:
+
+· CodeBuild needs permissions to pull code from the source, write logs to CloudWatch, and access the S3 bucket for artifacts.
+· CodePipeline needs permissions to read from the source, invoke CodeBuild, and deploy to S3 or CodeDeploy.
+
+Q5. What is AWS CodeDeploy?
+A5.AWS CodeDeploy is a service that automates code deployments to various compute services, such as Amazon EC2 instances, to ensure deployments are consistent and reliable.
+
+---
+
+Experiment 4: Kubernetes (kubectl) & Application Deployment
+
+Q1. What is Kubernetes (K8s)?
+A1.Kubernetes is an open-source container orchestration platform for automating the deployment, scaling, and management of containerized applications.
+
+Q2. What is kubectl?
+A2.kubectl is the command-line tool used to interact with and manage a Kubernetes cluster. You can use it to deploy applications, inspect cluster resources, and view logs.
+
+Q3. What are the main components of a Kubernetes cluster?
+A3.The main components are:
+
+· Control Plane (Master): Manages the cluster (e.g., scheduling, API server).
+· Nodes (Workers): Machines (VMs or physical) that run the applications.
+· Pods: The smallest deployable units in Kubernetes, which hold one or more containers.
+
+Q4. What is the difference between a Deployment and a Service in Kubernetes?
+A4.
+
+· Deployment: A higher-level abstraction that manages the deployment and scaling of a set of Pods. It ensures that a specified number of pod replicas are running.
+· Service: An abstraction that defines a logical set of Pods and a policy to access them (e.g., a stable IP address or DNS name). It enables network access to your Pods.
+
+---
+
+Experiment 5 & 6: Terraform on AWS
+
+Q1. What is Terraform?
+A1.Terraform is an open-source Infrastructure as Code (IaC) tool created by HashiCorp. It allows you to define and provision cloud infrastructure using a declarative configuration language (HCL).
+
+Q2. Explain the Terraform lifecycle (workflow).
+A2.The core Terraform workflow consists of three commands:
+
+1. terraform init: Initializes the working directory, downloads the required provider plugins.
+2. terraform plan: Creates an execution plan, showing what actions will be taken to achieve the desired state.
+3. terraform apply: Executes the plan to create the actual infrastructure.
+4. terraform destroy: Destroys all the infrastructure managed by the Terraform configuration.
+
+Q3. What are the main files used in a Terraform project?
+A3.
+
+· main.tf: The primary file containing resource definitions.
+· variables.tf: Contains variable declarations for your configuration.
+· terraform.tfvars (or similar): Provides values for those variables.
+
+Q4. What is a Terraform Provider?
+A4.A provider is a plugin that enables Terraform to interact with an API, such as the AWS API. The AWS provider is the most common, allowing Terraform to manage resources like EC2 instances, S3 buckets, and IAM roles.
+
+Q5. In your experiment, what resources did you create with Terraform?
+A5.We created an EC2 instance, a security group with rules for SSH (port 22) and Jenkins (port 8080), and an Elastic IP address associated with the instance.
+
+---
+
+Experiment 7 & 8: Jenkins & SonarQube Integration (SAST)
+
+Q1. What is SAST?
+A1.SAST stands for Static Application Security Testing. It is a white-box testing method that analyzes source code for security vulnerabilities, bugs, and code smells before the program is run or deployed.
+
+Q2. What is SonarQube?
+A2.SonarQube is an open-source platform for continuous inspection of code quality. It performs static analysis to detect bugs, vulnerabilities, and code smells across multiple programming languages.
+
+Q3. Why integrate Jenkins with SonarQube?
+A3.Integrating Jenkins with SonarQube automates the code quality and security checks within the CI/CD pipeline. Every time code is committed and a build is triggered, SonarQube automatically analyzes the code, ensuring quality gates are met before deployment.
+
+Q4. What is a "Quality Gate" in SonarQube?
+A4.A Quality Gate is a set of conditions (e.g., no new bugs, code coverage above 80%, security rating A) that the project must meet before it can be passed to the next stage (e.g., production). It acts as a pass/fail criterion for the code analysis.
+
+Q5. How does Jenkins trigger a SonarQube analysis?
+A5.This is typically done using the SonarQube Scanner plugin in Jenkins. In a Jenkins pipeline, a build step is added that executes the scanner, which sends the source code to the SonarQube server for analysis.
+
+---
+
+Experiment 9 & 10: Nagios for Continuous Monitoring
+
+Q1. What is Nagios?
+A1.Nagios is a powerful open-source monitoring system that enables organizations to identify and resolve IT infrastructure problems before they affect critical business processes.
+
+Q2. What is NRPE?
+A2.NRPE stands for Nagios Remote Plugin Executor. It is an agent that runs on remote Linux/Unix machines, allowing the central Nagios server to execute Nagios plugins on those remote machines. This is used to monitor local resources like disk usage, CPU load, etc.
+
+Q3. What is the difference between a Host and a Service in Nagios?
+A3.
+
+· Host: A physical or virtual server (e.g., a web server, a database server).
+· Service: A particular attribute or function of a host that you monitor (e.g., HTTP, SSH, Disk Space, CPU Load).
+
+Q4. How did you monitor a remote Linux host with Nagios?
+A4.
+
+1. Installed the nagios-nrpe-server and plugins on the remote host.
+2. Configured the NRPE daemon on the remote host to allow connections from the Nagios server's IP address.
+3. Created a new host and service configuration file on the Nagios server defining the remote host and the checks to perform (e.g., PING).
+4. Used the check_nrpe plugin from the Nagios server to test connectivity and execute commands on the remote host.
+
+---
+
+Experiment 11 & 12: AWS Lambda with S3 Trigger
+
+Q1. What is AWS Lambda?
+A1.AWS Lambda is a serverless compute service that lets you run code without provisioning or managing servers. You pay only for the compute time you consume.
+
+Q2. What does "serverless" mean?
+A2.Serverless means you don't have to manage the underlying servers. The cloud provider (AWS) dynamically manages the allocation of machine resources. You just focus on your code.
+
+Q3. What is an S3 trigger for Lambda?
+A3.It is an event source mapping that automatically invokes a specific Lambda function in response to events in an S3 bucket, such as when an object is created (s3:ObjectCreated:*) or deleted.
+
+Q4. What was the aim of the experiment with Lambda and S3?
+A4.To create a Lambda function (in a language like Node.js/Python) that is automatically triggered whenever a new image file (object) is uploaded to a specific S3 bucket. The function then logs a message like "An Image has been added -> [filename]" to Amazon CloudWatch Logs.
+
+Q5. What IAM permissions are needed for a Lambda function triggered by S3?
+A5.
+
+· The Lambda function's execution role needs permission to write logs to CloudWatch.
+· S3 needs permission to invoke the Lambda function. This is set up by adding a "Lambda Function Policy" to the function when you create the trigger.
+
+---
+
+Experiment 13: Google Cloud Launcher
+
+Q1. What is Google Cloud Launcher (now Marketplace)?
+A1.It is a platform within the Google Cloud Console that offers pre-configured, ready-to-deploy software packages and solutions (like WordPress, LAMP stack, databases). It simplifies launching complex applications.
+
+Q2. What did you deploy using the Cloud Launcher?
+A2.We deployed a WordPress instance, which is a popular content management system (CMS) for building websites and blogs.
+
+Q3. What underlying GCP resources are created when you launch a solution from the Marketplace?
+A3.It typically creates a Compute Engine (VM) instance, a boot disk, and configures necessary networking/firewall rules. For solutions like WordPress, it may also set up a database.
+
+Q4. Why is it important to clean up (delete) resources after the lab?
+A4.To avoid incurring ongoing costs. GCP charges for resources like VM instances and disk storage as long as they are running, even if you are not using them. Deleting them prevents unexpected charges.
+
+---
+
+General AWS & DevOps Questions
+
+Q1. What is the full form of S3 and what is it used for?
+A1.S3 stands for Simple Storage Service. It is an object storage service that offers industry-leading scalability, data availability, security, and performance. It is used to store and retrieve any amount of data, at any time, from anywhere on the web. Common uses include backup, static website hosting, and data lakes.
+
+Q2. What is the full form of EC2 and what is it used for?
+A2.EC2 stands for Elastic Compute Cloud. It provides scalable computing capacity in the AWS cloud. It allows you to launch virtual servers (instances), configure security and networking, and manage storage. It is used to host applications, run workloads, and handle computing tasks of all scales.
+
+Q3. What is the difference between CI and CD?
+A3.
+
+· CI (Continuous Integration): The practice of frequently merging all developers' working copies to a shared mainline (e.g., in Git). This is often automated with builds and tests running on every commit.
+· CD (Continuous Delivery/Deployment): An extension of CI where code changes are automatically prepared for a release to production. Continuous Delivery requires manual approval for deployment, while Continuous Deployment automatically deploys every change that passes the pipeline.epared for a release to production. Continuous Delivery requires manual approval for deployment, while Continuous Deployment automatically deploys every change that passes the pipeline.
